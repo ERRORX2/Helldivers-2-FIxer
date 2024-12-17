@@ -279,7 +279,7 @@ partial class HD2_Fixer
         button1.Size = new Size(107, 43);
         button1.TabIndex = 0;
         button1.Text = "Network Reset";
-        toolTip1.SetToolTip(button1, "TEST");
+        toolTip1.SetToolTip(button1, "Resets Network by clearing DNS and some extras");
         button1.UseVisualStyleBackColor = true;
         button1.Click += button1_Click;
         // 
@@ -292,7 +292,7 @@ partial class HD2_Fixer
         button2.Size = new Size(107, 43);
         button2.TabIndex = 1;
         button2.Text = "Remove Appdata";
-        toolTip1.SetToolTip(button2, "TEST");
+        toolTip1.SetToolTip(button2, "Removes User_Settings and Shader Cache");
         button2.UseVisualStyleBackColor = true;
         button2.Click += button2_Click;
         // 
@@ -304,7 +304,7 @@ partial class HD2_Fixer
         button3.Size = new Size(107, 43);
         button3.TabIndex = 2;
         button3.Text = "TDR FIX";
-        toolTip1.SetToolTip(button3, "TEST");
+        toolTip1.SetToolTip(button3, "Adds a TDR delay of 6sec to prevent driver crashes");
         button3.UseVisualStyleBackColor = true;
         button3.Click += button3_Click;
         // 
@@ -316,7 +316,7 @@ partial class HD2_Fixer
         button4.Size = new Size(107, 43);
         button4.TabIndex = 3;
         button4.Text = "Reinstall GameGuard";
-        toolTip1.SetToolTip(button4, "TEST");
+        toolTip1.SetToolTip(button4, "Reinstall the Anti-Cheat");
         button4.UseVisualStyleBackColor = true;
         button4.Click += button4_Click;
         // 
@@ -328,7 +328,7 @@ partial class HD2_Fixer
         button5.Size = new Size(107, 43);
         button5.TabIndex = 4;
         button5.Text = "VC++ Download";
-        toolTip1.SetToolTip(button5, "TEST");
+        toolTip1.SetToolTip(button5, "Downloads VC++ and will ask you how to proceed");
         button5.UseVisualStyleBackColor = true;
         button5.Click += button5_Click;
         // 
@@ -340,7 +340,7 @@ partial class HD2_Fixer
         button6.Size = new Size(107, 43);
         button6.TabIndex = 5;
         button6.Text = "Close";
-        toolTip1.SetToolTip(button6, "TEST");
+        toolTip1.SetToolTip(button6, "Closes your room door");
         button6.UseVisualStyleBackColor = true;
         button6.Click += button6_Click;
         // 
