@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "proj 03", "proj 03.csproj", "{889416AB-2B8D-413D-B9AB-C88F2AC42AA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HD2 FIXER", "HD2 FIXER.csproj", "{889416AB-2B8D-413D-B9AB-C88F2AC42AA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
