@@ -15,4 +15,4 @@ VC++ Download = Downloads and Runs Visual C++ 2012, 2015 and 2019 to fix the gam
 	2.	Once downloaded unzip the file.
 	3.	Once the file is unziped run HD2 FIXER as admin.
 	3.1	It might be nescessary to install .NET 9.0 the program will prompt you if you are missing it.
-	4. Voila you are good to go.
+	4. 	Voila you are good to go.
