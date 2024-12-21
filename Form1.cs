@@ -26,12 +26,12 @@ public partial class HD2_Fixer : Form
             label1.ForeColor = Color.Red;
             BackColor = Color.Black;
             button1.Dispose();
-           
+
             button3.Dispose();
             //button4.Dispose();
             button5.Dispose();
             //button6.Dispose();
-            
+
 
 
         }
@@ -63,6 +63,7 @@ public partial class HD2_Fixer : Form
         }
         progressBar1.Visible = false;
         label3.Visible = false;
+        richTextBox1.Visible = false;
 
     }
 
@@ -73,11 +74,13 @@ public partial class HD2_Fixer : Form
         button2.ForeColor = result.color;
         progressBar1.Visible = false;
         label3.Visible = false;
+        richTextBox1.Visible = false;
 
     }
 
     private void button3_Click(object sender, EventArgs e)
     {
+        
         if (isAdmin())
         {
             ExecuteCommandAsAdmin("reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\" /v \"TdrDelay\" /t REG_DWORD /d 6 & reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\" /v \"TdrDdiDelay\" /t REG_DWORD /d 6");
@@ -91,6 +94,7 @@ public partial class HD2_Fixer : Form
         }
         progressBar1.Visible = false;
         label3.Visible = false;
+        richTextBox1.Visible = false;
     }
     private void button4_Click(object sender, EventArgs e)
     {
@@ -100,6 +104,7 @@ public partial class HD2_Fixer : Form
         MessageBox.Show("Done");
         progressBar1.Visible = false;
         label3.Visible = false;
+        richTextBox1.Visible = false;
     }
     private void button5_Click(object sender, EventArgs e)
     {
@@ -110,14 +115,21 @@ public partial class HD2_Fixer : Form
         label3.Text = "Please Wait.";
         progressBar1.Visible = true;
         Cursor = Cursors.WaitCursor;
-
+        richTextBox1.Visible = false;
 
     }
     private void button6_Click(object sender, EventArgs e)
-    {
+    {   
+        richTextBox1.Visible = true;
+        richTextBox1.Clear();
         progressBar1.Visible = false;
         label3.Visible = false;
-        Close();
+        InstalledApp installedApp = new InstalledApp();
+        getBadBoys(richTextBox1);
+        label3.Visible = true;
+        label3.Text = "Programs that can cause issues found:";
+        
+
 
     }
 }

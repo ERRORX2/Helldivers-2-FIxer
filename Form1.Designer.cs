@@ -23,6 +23,17 @@ public class Result
     public Color color {get; set;}  
     public string path { get; set;}
 }
+public class InstalledApp
+{
+    public string DisplayName { get; set; }
+    public string InstallationLocation { get; set; }
+
+    public string found { get; set; }
+
+    public string[] warningListAR = ["Avast Internet Security", "Cepstral SwiftTalker", "ESET Endpoint", "ESET File", "ESET Managemen", "ESET PROTECT", "ESET Rogue", 
+        "ESET Security", "Hamachi", "iCue", "MSI Afterburner", "Mullvad VPN", "Nahimic","Norton 360","Outplayed","Overwolf","Process Lasso","Radmin","Razer Cortex",
+        "Ryzen Master", "Samsung Magician","Surfshark","Wargaming.net Game Center","Webroot","ArmouryCrate","Armoury Crate"];
+}
 
 partial class HD2_Fixer
 {
@@ -236,8 +247,90 @@ partial class HD2_Fixer
         {
             return new Result {path = antiCheatLocation ,Msg = "Folder not found", color = Color.Red };
         }
-    } 
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    public static void getBadBoys(RichTextBox richTextBox)
+    {
+
+        foreach (var item in GetFullListInstalledApplication())
+        {
+            foreach (string warningList in item.warningListAR)
+            {
+                if (warningList == item.DisplayName)
+                {
+                    item.found = warningList;
+                    richTextBox.ForeColor = Color.Red;
+                    richTextBox.AppendText(warningList + item.InstallationLocation + "\n");
+
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        if(richTextBox.Text == "") {
+            richTextBox.AppendText("None.");
+            richTextBox.ForeColor= Color.Green;
+        }
+    }
+        
+
+        private static List<InstalledApp> GetFullListInstalledApplication()
+        {
+
+            IEnumerable<InstalledApp> finalList = new List<InstalledApp>();
+
+            string registry_key_32 = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            string registry_key_64 = @"SOFTWARE\WoW6432Node\Microsoft\Windows\CurrentVersion\Uninstall";
+
+            List<InstalledApp> win32AppsCU = GetInstalledApplication(Registry.CurrentUser, registry_key_32);
+            List<InstalledApp> win32AppsLM = GetInstalledApplication(Registry.LocalMachine, registry_key_32);
+            List<InstalledApp> win64AppsCU = GetInstalledApplication(Registry.CurrentUser, registry_key_64);
+            List<InstalledApp> win64AppsLM = GetInstalledApplication(Registry.LocalMachine, registry_key_64);
+
+            finalList = win32AppsCU.Concat(win32AppsLM).Concat(win64AppsCU).Concat(win64AppsLM);
+
+            finalList = finalList.GroupBy(d => d.DisplayName).Select(d => d.First());
+
+            return finalList.OrderBy(o => o.DisplayName).ToList();
+        }
+
+        private static List<InstalledApp> GetInstalledApplication(RegistryKey regKey, string registryKey)
+        {
+            List<InstalledApp> list = new List<InstalledApp>();
+            using (Microsoft.Win32.RegistryKey key = regKey.OpenSubKey(registryKey))
+            {
+                if (key != null)
+                {
+                    foreach (string name in key.GetSubKeyNames())
+                    {
+                        using (RegistryKey subkey = key.OpenSubKey(name))
+                        {
+                            string displayName = (string)subkey.GetValue("DisplayName");
+                            string installLocation = (string)subkey.GetValue("InstallLocation");
+
+                            if (!string.IsNullOrEmpty(displayName)) // && !string.IsNullOrEmpty(installLocation)
+                            {
+                                list.Add(new InstalledApp()
+                                {
+                                    DisplayName = displayName.Trim(),
+                                    InstallationLocation = installLocation,
+                                });
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static bool isAdmin()
     {
         {
@@ -269,6 +362,7 @@ partial class HD2_Fixer
         label2 = new Label();
         progressBar1 = new ProgressBar();
         label3 = new Label();
+        richTextBox1 = new RichTextBox();
         SuspendLayout();
         // 
         // button1
@@ -339,8 +433,8 @@ partial class HD2_Fixer
         button6.Name = "button6";
         button6.Size = new Size(107, 43);
         button6.TabIndex = 5;
-        button6.Text = "Close";
-        toolTip1.SetToolTip(button6, "Closes your room door");
+        button6.Text = "Detect Programs";
+        toolTip1.SetToolTip(button6, "Detects programs that can cause issues while running the game");
         button6.UseVisualStyleBackColor = true;
         button6.Click += button6_Click;
         // 
@@ -398,6 +492,15 @@ partial class HD2_Fixer
         label3.Text = "label3";
         label3.Visible = false;
         // 
+        // richTextBox1
+        // 
+        richTextBox1.Location = new Point(32, 56);
+        richTextBox1.Name = "richTextBox1";
+        richTextBox1.Size = new Size(702, 159);
+        richTextBox1.TabIndex = 10;
+        richTextBox1.Text = "";
+        richTextBox1.Visible = false;
+        // 
         // HD2_Fixer
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -406,6 +509,7 @@ partial class HD2_Fixer
         BackColor = SystemColors.Control;
         BackgroundImageLayout = ImageLayout.Stretch;
         ClientSize = new Size(769, 293);
+        Controls.Add(richTextBox1);
         Controls.Add(label3);
         Controls.Add(progressBar1);
         Controls.Add(label2);
@@ -442,4 +546,5 @@ partial class HD2_Fixer
     private WebClient webClient = new WebClient();
     public Label label3;
     private System.Windows.Forms.Timer updateTimer;
+    private RichTextBox richTextBox1;
 }
